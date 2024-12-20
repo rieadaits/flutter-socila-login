@@ -42,8 +42,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String _token = "no token found";
 
-  void _incrementCounter() async{
+  void _googleSignIn() async{
   final value = await SocialLogInService.instance.signInWithGoogle();
+    setState(() {
+      _token = value ?? "0";
+    });
+  }
+
+  void _appleSignIn() async{
+  final value = await SocialLogInService.instance.signInWithApple();
     setState(() {
       _token = value ?? "0";
     });
@@ -67,7 +74,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const SizedBox(height: 20,),
-            ElevatedButton(onPressed: _incrementCounter, child: const Text("Google signin"))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(onPressed: _googleSignIn, child: const Text("Google signIn")),
+                const SizedBox(width: 20,),
+                ElevatedButton(onPressed: _appleSignIn, child: const Text("Apple signIn")),
+              ],
+            )
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
